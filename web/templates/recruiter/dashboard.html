@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Dashboard nhà tuyển dụng{% endblock %}
+{% block content %}
+<section class="page-header"><div class="container"><span class="eyebrow">NHÀ TUYỂN DỤNG</span><h1>Tổng quan tuyển dụng</h1><p>Thống kê dựa trên các tin thuộc tài khoản đang đăng nhập.</p></div></section>
+<section class="section compact"><div class="container">
+<div class="stats-grid four"><div class="stat-card"><span>Tin tuyển dụng</span><strong>{{ total_jobs }}</strong></div><div class="stat-card"><span>Tổng ứng viên</span><strong>{{ total_applicants }}</strong></div><div class="stat-card"><span>Chờ duyệt</span><strong>{{ pending }}</strong></div><div class="stat-card"><span>Đã duyệt</span><strong>{{ approved }}</strong></div></div>
+<div class="section-head"><h2>Ứng viên mới nhất</h2><a href="{{ url_for('recruiter.jobs') }}">Quản lý việc làm →</a></div>
+<div class="table-card"><table><thead><tr><th>Ứng viên</th><th>Việc làm</th><th>Ngày ứng tuyển</th><th>Trạng thái</th></tr></thead><tbody>{% for x in recent %}<tr><td>{{ x.get('ung_vien',{}).get('ho_so',{}).get('ho_ten', x.get('ung_vien',{}).get('ten_dang_nhap')) }}</td><td>{{ x.get('viec_lam',{}).get('tieu_de') }}</td><td>{{ x.get('ngay_ung_tuyen').strftime('%d/%m/%Y') if x.get('ngay_ung_tuyen') else '' }}</td><td><span class="status {{ x.get('trang_thai') }}">{{ x.get('trang_thai') }}</span></td></tr>{% else %}<tr><td colspan="4">Chưa có dữ liệu ứng tuyển.</td></tr>{% endfor %}</tbody></table></div>
+</div></section>
+{% endblock %}

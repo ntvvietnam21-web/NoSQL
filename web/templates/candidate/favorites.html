@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Việc làm yêu thích{% endblock %}
+{% block content %}
+<section class="page-header"><div class="container"><span class="eyebrow">REDIS SET</span><h1>Việc làm yêu thích</h1><p>Danh sách được lưu bằng key <code>favorite:jobs:&lt;user_id&gt;</code>.</p></div></section>
+<section class="section compact"><div class="container"><div class="job-grid">{% for job in jobs %}{% include "jobs/_card.html" %}{% else %}<div class="empty">Bạn chưa lưu việc làm nào.</div>{% endfor %}</div></div></section>
+{% endblock %}

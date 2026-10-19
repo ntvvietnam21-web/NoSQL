@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Trang chủ - JobPortal{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">CỔNG THÔNG TIN TUYỂN DỤNG</span>
+      <h1>Tìm công việc phù hợp với bạn</h1>
+      <p>Khám phá hàng nghìn cơ hội việc làm từ dữ liệu MongoDB và trải nghiệm truy xuất nhanh với Redis.</p>
+      <form class="search-box" action="{{ url_for('jobs.list_jobs') }}" method="get">
+        <input name="q" placeholder="Từ khóa, công nghệ, công ty...">
+        <input name="location" placeholder="Địa điểm">
+        <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+      </form>
+      <div class="hero-pills"><span>IT</span><span>Marketing</span><span>Kinh doanh</span><span>Chăm sóc khách hàng</span></div>
+    </div>
+    <div class="hero-card">
+      <div class="metric"><strong>50.000</strong><span>Việc làm</span></div>
+      <div class="metric"><strong>20.000</strong><span>Người dùng</span></div>
+      <div class="metric"><strong>100.000</strong><span>Lượt ứng tuyển</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div><span class="eyebrow">MỚI NHẤT</span><h2>Việc làm đang tuyển</h2></div>
+      <a href="{{ url_for('jobs.list_jobs') }}">Xem tất cả →</a>
+    </div>
+    <div class="job-grid">
+      {% for job in jobs %}
+        {% include "jobs/_card.html" %}
+      {% else %}
+        <div class="empty">Chưa có dữ liệu việc làm.</div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

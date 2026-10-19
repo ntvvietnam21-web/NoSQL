@@ -1,0 +1,14 @@
+<article class="job-card">
+  <div class="job-card-top">
+    <span class="badge">{{ job.get('nganh_nghe', 'Khác') }}</span>
+    <span class="date">{{ job.get('ngay_dang').strftime('%d/%m/%Y') if job.get('ngay_dang') and job.get('ngay_dang').strftime is defined else '' }}</span>
+  </div>
+  <h3><a href="{{ url_for('jobs.detail', job_id=job['_id_str'] if job.get('_id_str') else job['_id']) }}">{{ job.get('tieu_de', 'Việc làm') }}</a></h3>
+  <p class="company">{{ job.get('cong_ty', {}).get('ten_cong_ty', 'Công ty') }}</p>
+  <div class="job-meta">
+    <span>📍 {{ job.get('dia_diem', 'Chưa cập nhật') }}</span>
+    <span>💰 {{ job.get('muc_luong', {}).get('toi_thieu')|salary }} - {{ job.get('muc_luong', {}).get('toi_da')|salary }}</span>
+    <span>💼 {{ job.get('chi_tiet_nganh', {}).get('kinh_nghiem_nam', 0) }} năm KN</span>
+  </div>
+  <a class="btn btn-outline full" href="{{ url_for('jobs.detail', job_id=job['_id_str'] if job.get('_id_str') else job['_id']) }}">Xem chi tiết</a>
+</article>

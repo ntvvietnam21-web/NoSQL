@@ -1,0 +1,20 @@
+{% set c = job.get('cong_ty',{}) if job else {} %}{% set a=c.get('dia_chi',{}) if c else {} %}{% set l=c.get('lien_he',{}) if c else {} %}{% set s=job.get('muc_luong',{}) if job else {} %}{% set d=job.get('chi_tiet_nganh',{}) if job else {} %}
+<div class="form-grid">
+<label class="span-2">Tiêu đề<input name="tieu_de" required value="{{ job.get('tieu_de','') if job else '' }}"></label>
+<label>Ngành nghề<input name="nganh_nghe" required value="{{ job.get('nganh_nghe','') if job else '' }}"></label>
+<label>Địa điểm<input name="dia_diem" required value="{{ job.get('dia_diem','') if job else '' }}"></label>
+<label>Tên công ty<input name="ten_cong_ty" required value="{{ c.get('ten_cong_ty','') }}"></label>
+<label>Quy mô<input name="quy_mo" value="{{ c.get('quy_mo','') }}"></label>
+<label>Lương tối thiểu<input name="luong_toi_thieu" type="number" value="{{ s.get('toi_thieu','') }}"></label>
+<label>Lương tối đa<input name="luong_toi_da" type="number" value="{{ s.get('toi_da','') }}"></label>
+<label>Kinh nghiệm (năm)<input name="kinh_nghiem" type="number" min="0" value="{{ d.get('kinh_nghiem_nam',0) }}"></label>
+<label>Hình thức làm việc<input name="hinh_thuc_lam_viec" value="{{ d.get('hinh_thuc_lam_viec','') }}" placeholder="Toàn thời gian"></label>
+<label class="span-2">Công nghệ (phân cách bằng dấu phẩy)<input name="cong_nghe" value="{{ (d.get('cong_nghe_chinh',[]) or [])|join(', ') }}"></label>
+<label>Thành phố công ty<input name="thanh_pho" value="{{ a.get('thanh_pho','') }}"></label>
+<label>Quận/huyện<input name="quan_huyen" value="{{ a.get('quan_huyen','') }}"></label>
+<label class="span-2">Địa chỉ chi tiết<input name="dia_chi_chi_tiet" value="{{ a.get('chi_tiet','') }}"></label>
+<label>Email liên hệ<input name="email_lien_he" value="{{ l.get('email','') }}"></label>
+<label>Số điện thoại<input name="so_dien_thoai" value="{{ l.get('so_dien_thoai','') }}"></label>
+<label>Trạng thái<select name="trang_thai"><option value="dang_tuyen" {% if not job or job.get('trang_thai')=='dang_tuyen' %}selected{% endif %}>Đang tuyển</option><option value="da_dong" {% if job and job.get('trang_thai')=='da_dong' %}selected{% endif %}>Đã đóng</option></select></label>
+<label class="span-2">Mô tả công ty<textarea name="mo_ta_cong_ty">{{ c.get('mo_ta','') }}</textarea></label>
+</div>

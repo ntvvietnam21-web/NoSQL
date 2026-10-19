@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Việc đã ứng tuyển{% endblock %}
+{% block content %}
+<section class="page-header"><div class="container"><span class="eyebrow">ỨNG TUYỂN</span><h1>Việc đã ứng tuyển</h1><p>Dữ liệu liên kết QL_UngTuyen với QL_ViecLam bằng $lookup.</p></div></section>
+<section class="section compact"><div class="container"><div class="table-card"><table><thead><tr><th>Công việc</th><th>Công ty</th><th>Ngày ứng tuyển</th><th>Trạng thái</th><th>Ghi chú</th></tr></thead><tbody>{% for item in items %}<tr><td><a href="{{ url_for('jobs.detail', job_id=item.get('ma_viec_lam')) }}">{{ item.get('viec_lam',{}).get('tieu_de') }}</a></td><td>{{ item.get('viec_lam',{}).get('cong_ty',{}).get('ten_cong_ty') }}</td><td>{{ item.get('ngay_ung_tuyen').strftime('%d/%m/%Y %H:%M') if item.get('ngay_ung_tuyen') else '' }}</td><td><span class="status {{ item.get('trang_thai') }}">{{ item.get('trang_thai') }}</span></td><td>{{ item.get('ghi_chu','') }}</td></tr>{% else %}<tr><td colspan="5">Bạn chưa ứng tuyển công việc nào.</td></tr>{% endfor %}</tbody></table></div></div></section>
+{% endblock %}

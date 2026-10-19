@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Việc làm của tôi{% endblock %}
+{% block content %}
+<section class="page-header"><div class="container page-head-flex"><div><span class="eyebrow">QUẢN LÝ TIN</span><h1>Việc làm của tôi</h1><p>Các tin có <code>cong_ty.ma_nha_tuyen_dung</code> bằng tài khoản hiện tại.</p></div><a class="btn btn-primary" href="{{ url_for('recruiter.create_job') }}">+ Đăng việc làm</a></div></section>
+<section class="section compact"><div class="container"><div class="table-card"><table><thead><tr><th>Tiêu đề</th><th>Ngành</th><th>Địa điểm</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody>{% for job in jobs %}<tr><td>{{ job.get('tieu_de') }}</td><td>{{ job.get('nganh_nghe') }}</td><td>{{ job.get('dia_diem') }}</td><td><span class="status">{{ job.get('trang_thai') }}</span></td><td class="actions"><a href="{{ url_for('jobs.detail', job_id=job['_id']) }}">Xem</a><a href="{{ url_for('recruiter.edit_job', job_id=job['_id']) }}">Sửa</a><a href="{{ url_for('recruiter.applicants', job_id=job['_id']) }}">Ứng viên</a></td></tr>{% else %}<tr><td colspan="5">Chưa có tin tuyển dụng.</td></tr>{% endfor %}</tbody></table></div></div></section>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Danh sách việc làm{% endblock %}
+{% block content %}
+<section class="page-header"><div class="container"><span class="eyebrow">TÌM KIẾM</span><h1>Danh sách việc làm</h1><p>Tìm thấy {{ total }} kết quả phù hợp.</p></div></section>
+<section class="section compact">
+  <div class="container">
+    <form class="filter-bar" method="get">
+      <input name="q" value="{{ keyword }}" placeholder="Từ khóa...">
+      <input name="location" value="{{ location }}" placeholder="Địa điểm...">
+      <select name="industry"><option value="">Tất cả ngành nghề</option>{% for item in industries %}<option value="{{ item }}" {% if item==industry %}selected{% endif %}>{{ item }}</option>{% endfor %}</select>
+      <button class="btn btn-primary">Tìm kiếm</button>
+    </form>
+    <div class="job-grid">
+      {% for job in jobs %}{% include "jobs/_card.html" %}{% else %}<div class="empty">Không tìm thấy công việc phù hợp.</div>{% endfor %}
+    </div>
+    {% if pages > 1 %}
+    <div class="pagination">
+      {% if page > 1 %}<a href="?q={{ keyword }}&location={{ location }}&industry={{ industry }}&page={{ page-1 }}">← Trước</a>{% endif %}
+      <span>Trang {{ page }} / {{ pages }}</span>
+      {% if page < pages %}<a href="?q={{ keyword }}&location={{ location }}&industry={{ industry }}&page={{ page+1 }}">Sau →</a>{% endif %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

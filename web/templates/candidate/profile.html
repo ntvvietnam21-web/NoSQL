@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Hồ sơ ứng viên{% endblock %}
+{% block content %}
+<section class="page-header"><div class="container"><span class="eyebrow">HỒ SƠ</span><h1>Hồ sơ ứng viên</h1><p>Cập nhật thông tin nghề nghiệp được lưu trong embedded document <code>ho_so</code>.</p></div></section>
+<section class="section compact"><div class="container narrow"><form method="post" class="content-card form-grid">
+  {% set hs=user.get('ho_so',{}) %}{% set ct=hs.get('chi_tiet_ho_so',{}) %}
+  <label>Họ tên<input name="ho_ten" value="{{ hs.get('ho_ten','') }}"></label>
+  <label>Email<input value="{{ user.get('email','') }}" disabled></label>
+  <label>Ngành nghề<input name="nganh_nghe" value="{{ hs.get('nganh_nghe','') }}"></label>
+  <label>Học vấn<input name="hoc_van" value="{{ hs.get('hoc_van','') }}"></label>
+  <label>Kinh nghiệm<input name="kinh_nghiem" value="{{ hs.get('kinh_nghiem','') }}" placeholder="3 năm kinh nghiệm"></label>
+  <label>GitHub<input name="github" value="{{ ct.get('github','') }}"></label>
+  <label class="span-2">Kỹ năng (phân cách bằng dấu phẩy)<textarea name="ky_nang">{{ (ct.get('ky_nang',[]) or [])|join(', ') }}</textarea></label>
+  <div class="span-2"><button class="btn btn-primary">Lưu thay đổi</button></div>
+</form></div></section>
+{% endblock %}

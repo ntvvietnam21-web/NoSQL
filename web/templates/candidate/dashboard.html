@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Dashboard ứng viên{% endblock %}
+{% block content %}
+<section class="page-header"><div class="container"><span class="eyebrow">ỨNG VIÊN</span><h1>Xin chào, {{ session.get('display_name') }}</h1><p>Theo dõi hồ sơ và các cơ hội việc làm của bạn.</p></div></section>
+<section class="section compact"><div class="container">
+  <div class="stats-grid"><div class="stat-card"><span>Đã ứng tuyển</span><strong>{{ applications }}</strong></div><div class="stat-card"><span>Việc yêu thích</span><strong>{{ favorites }}</strong></div><div class="stat-card"><span>Đã duyệt</span><strong>{{ approved }}</strong></div></div>
+  <div class="quick-links"><a href="{{ url_for('candidate.profile') }}">👤 Hồ sơ cá nhân</a><a href="{{ url_for('candidate.applications') }}">📄 Việc đã ứng tuyển</a><a href="{{ url_for('candidate.favorites') }}">♥ Việc yêu thích</a><a href="{{ url_for('candidate.history') }}">🕘 Lịch sử tìm kiếm</a></div>
+  <div class="section-head"><h2>Việc làm gợi ý</h2><a href="{{ url_for('jobs.list_jobs') }}">Xem thêm →</a></div>
+  <div class="job-list-simple">{% for job in recommended %}<a href="{{ url_for('jobs.detail', job_id=job['_id']) }}"><strong>{{ job.get('tieu_de') }}</strong><span>{{ job.get('cong_ty',{}).get('ten_cong_ty') }} · {{ job.get('dia_diem') }}</span></a>{% endfor %}</div>
+</div></section>
+{% endblock %}

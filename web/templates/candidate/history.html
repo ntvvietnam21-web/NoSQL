@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Lịch sử tìm kiếm{% endblock %}
+{% block content %}
+<section class="page-header"><div class="container"><span class="eyebrow">REDIS LIST</span><h1>Lịch sử tìm kiếm gần đây</h1><p>Hệ thống chỉ giữ tối đa 5 từ khóa mới nhất.</p></div></section>
+<section class="section compact"><div class="container narrow"><div class="content-card"><ol class="history-list">{% for x in searches %}<li><a href="{{ url_for('jobs.list_jobs', q=x) }}">{{ x }}</a></li>{% else %}<li>Chưa có lịch sử tìm kiếm.</li>{% endfor %}</ol></div></div></section>
+{% endblock %}

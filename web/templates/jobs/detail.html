@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{ job.get('tieu_de') }}{% endblock %}
+{% block content %}
+<section class="page-header job-detail-head">
+  <div class="container detail-head-grid">
+    <div>
+      <span class="badge">{{ job.get('nganh_nghe') }}</span>
+      <h1>{{ job.get('tieu_de') }}</h1>
+      <p>{{ job.get('cong_ty', {}).get('ten_cong_ty') }}</p>
+      <div class="detail-chips"><span>📍 {{ job.get('dia_diem') }}</span><span>👁 {{ views }} lượt xem</span><span>⚡ Nguồn: {{ cache_source }}</span></div>
+    </div>
+    <div class="detail-actions">
+      {% if session.get('role') == 'ung_vien' %}
+        <form method="post" action="{{ url_for('jobs.toggle_favorite', job_id=job['_id_str']) }}"><button class="btn btn-light full">{{ '♥ Đã lưu' if favorite else '♡ Lưu việc làm' }}</button></form>
+        <form method="post" action="{{ url_for('jobs.apply_job', job_id=job['_id_str']) }}"><button class="btn btn-primary full" {% if applied %}disabled{% endif %}>{{ 'Đã ứng tuyển' if applied else 'ỨNG TUYỂN NGAY' }}</button></form>
+      {% elif not session.get('user_id') %}
+        <a class="btn btn-primary full" href="{{ url_for('auth.login') }}">Đăng nhập để ứng tuyển</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+<section class="section compact"><div class="container detail-layout">
+  <div class="content-card">
+    <h2>Thông tin công việc</h2>
+    <div class="info-grid">
+      <div><span>Mức lương</span><strong>{{ job.get('muc_luong', {}).get('toi_thieu')|salary }} - {{ job.get('muc_luong', {}).get('toi_da')|salary }}</strong></div>
+      <div><span>Kinh nghiệm</span><strong>{{ job.get('chi_tiet_nganh', {}).get('kinh_nghiem_nam', 0) }} năm</strong></div>
+      <div><span>Địa điểm</span><strong>{{ job.get('dia_diem') }}</strong></div>
+      <div><span>Trạng thái</span><strong>{{ job.get('trang_thai') }}</strong></div>
+    </div>
+    {% set detail = job.get('chi_tiet_nganh', {}) %}
+    {% if detail.get('cong_nghe_chinh') %}<h3>Công nghệ chính</h3><div class="tag-list">{% for x in detail.get('cong_nghe_chinh') %}<span>{{ x }}</span>{% endfor %}</div>{% endif %}
+    <h3>Chi tiết ngành</h3>
+    <div class="kv-list">{% for k,v in detail.items() if k not in ['cong_nghe_chinh'] %}<div><span>{{ k.replace('_',' ')|title }}</span><strong>{{ v }}</strong></div>{% endfor %}</div>
+  </div>
+  <aside class="content-card company-card">
+    <h2>{{ job.get('cong_ty', {}).get('ten_cong_ty') }}</h2>
+    <p>{{ job.get('cong_ty', {}).get('mo_ta', 'Chưa có mô tả công ty.') }}</p>
+    <div class="kv-list"><div><span>Quy mô</span><strong>{{ job.get('cong_ty', {}).get('quy_mo','—') }}</strong></div><div><span>Thành phố</span><strong>{{ job.get('cong_ty', {}).get('dia_chi',{}).get('thanh_pho','—') }}</strong></div><div><span>Liên hệ</span><strong>{{ job.get('cong_ty', {}).get('lien_he',{}).get('email','—') }}</strong></div></div>
+  </aside>
+</div></section>
+{% endblock %}
